@@ -40,31 +40,49 @@ const LOW_CONTRAST = [
   { foreground: "#ffffff", background: "#ffffff" },
   { foreground: "#ffffff", background: "#ffffff" },
   { foreground: "#ffffff", background: "#ffffff" },
-  { foreground: "#ffffff", background: "#ffffff" },
-  { foreground: "#93c47d", background: "#a2c4c9" },
-  { foreground: "#b6d7a8", background: "#f6b26b" },
+  // green - orange
+  { foreground: "#93c47d", background: "#e69138" },
+  { foreground: "#e69138", background: "#93c47d" },
+  // green - yellow
   { foreground: "#93c47d", background: "#ffd966" },
-  { foreground: "#674ea7", background: "#3c78d8" },
-  { foreground: "#ead1dc", background: "#c9daf8" },
-  { foreground: "#ead1dc", background: "#d9d2e9" },
-  { foreground: "#a2c4c9", background: "#93c47d" },
-  { foreground: "#f6b26b", background: "#b6d7a8" },
   { foreground: "#ffd966", background: "#93c47d" },
+  // purple - blue
+  { foreground: "#674ea7", background: "#3c78d8" },
   { foreground: "#3c78d8", background: "#674ea7" },
+  // light purple - blue
+  { foreground: "#6fa8dc", background: "#8e7cc3" },
+  { foreground: "#8e7cc3", background: "#6fa8dc" },
+  // light green - light orange
+  { foreground: "#b6d7a8", background: "#f6b26b" },
+  { foreground: "#f6b26b", background: "#b6d7a8" },
+  // light blue - pink
   { foreground: "#c9daf8", background: "#ead1dc" },
-  { foreground: "#d9d2e9", background: "#ead1dc" },
+  { foreground: "#ead1dc", background: "#c9daf8" },
 ];
 
 const HIGH_CONTRAST = [
-  { foreground: "#ffd966", background: "#674ea7" },
-  { foreground: "#674ea7", background: "#ffd966" },
-  { foreground: "#3c78d8", background: "#ffd966" },
-  { foreground: "#ffd966", background: "#3c78d8" },
-  { foreground: "#3c78d8", background: "#ead1dc" },
-  { foreground: "#ead1dc", background: "#3c78d8" },
-  { foreground: "#b6d7a8", background: "#674ea7" },
-  { foreground: "#674ea7", background: "#b6d7a8" },
+  // light orange - light purple
+  { foreground: "#ffd966", background: "#8e7cc3" },
+  { foreground: "#8e7cc3", background: "#ffd966" },
+  // light blue - yellow
+  { foreground: "#6fa8dc", background: "#ffd966" },
+  { foreground: "#ffd966", background: "#6fa8dc" },
+  // blue - pink
+  { foreground: "#6fa8dc", background: "#ead1dc" },
+  { foreground: "#ead1dc", background: "#6fa8dc" },
+  // light green - purple
+  { foreground: "#b6d7a8", background: "#8e7cc3" },
+  { foreground: "#8e7cc3", background: "#b6d7a8" },
 ];
+
+Array.prototype.shuffle = function () {
+  for (let index = this.length - 1; index > 0; index -= 1) {
+    const other = Math.floor(Math.random() * (index + 1));
+    const temp = this[index];
+    this[index] = this[other];
+    this[other] = temp;
+  }
+};
 
 function choice(array) {
   return array[Math.floor(Math.random() * array.length)];
@@ -77,10 +95,26 @@ function slot(character, colors) {
   };
 }
 
+function* loadedChoice(array, load) {
+  let buffer = [];
+
+  while (true) {
+    if (!buffer.length || Math.random() >= load) {
+      buffer = array.filter(() => true); // God forgive me
+      buffer.shuffle();
+    }
+
+    yield buffer.pop();
+  }
+}
+
 function generateRandomSlotBuffer() {
   const array = [];
+
+  const colorGenerator = loadedChoice(LOW_CONTRAST, 1);
+
   for (let i = 0; i < GRID_SIZE; i += 1) {
-    array.push(slot(choice(LEGAL_CHARACTERS), choice(LOW_CONTRAST)));
+    array.push(slot(choice(LEGAL_CHARACTERS), colorGenerator.next().value));
   }
 
   return array;
@@ -133,4 +167,5 @@ function handleInput(value) {
   });
 }
 
-handleInput("");
+window.onload = () =>
+  handleInput(document.getElementById("message-input").value);
