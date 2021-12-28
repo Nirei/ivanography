@@ -35,7 +35,10 @@
 
 .message-input {
   width: 500px;
-  height: 120px;
+  min-width: 500px;
+  max-width: 500px;
+  min-height: 120px;
+  max-height: 250px;
   padding: 0.5em;
   box-sizing: border-box;
 }
