@@ -4,20 +4,28 @@
   padding: 0;
 }
 
-.input-section {
+.section {
   display: flex;
   justify-content: center;
-  margin: 2em;
+}
+
+.header-section {
+  padding: 2em;
+}
+
+.title {
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  font-size: 48px;
+}
+
+.input-section {
+  margin: 0 0 2em 0;
 }
 
 .message-input {
-  width: 40em;
+  width: 500px;
   padding: 0.5em;
-}
-
-.output-section {
-  display: flex;
-  justify-content: center;
+  box-sizing: border-box;
 }
 
 .grid {
@@ -28,7 +36,7 @@
 .grid > tbody > tr > td {
   width: 24px;
   height: 24px;
-  border: 1px solid black;
+  border: 1px solid gray;
   font-weight: bolder;
   text-align: center;
 }
