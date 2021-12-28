@@ -11,15 +11,19 @@
 
 .header-section {
   padding: 2em;
+  background: #2c3e50;
 }
 
 .title {
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
   font-size: 48px;
+  color: white;
 }
 
 .input-section {
   margin: 0 0 2em 0;
+  background: #2c3e50;
+  padding: 1em 0;
 }
 
 .input-box {
@@ -28,9 +32,10 @@
 }
 
 .char-limit {
+  color: white;
   font-size: 12px;
   align-self: end;
-  margin-top: 0.5em;
+  margin: 0.5em 0;
 }
 
 .message-input {
