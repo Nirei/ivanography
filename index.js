@@ -102,7 +102,7 @@ function handleInput(value) {
   const slotBuffer = generateRandomSlotBuffer();
 
   for (let i = 0; i < message.length; i += 1) {
-    const chunk = GRID_SIZE / message.length;
+    const chunk = Math.floor(GRID_SIZE / message.length);
     const index = i * chunk + Math.floor(Math.random() * chunk);
     slotBuffer[index] = slot(message[i], choice(HIGH_CONTRAST));
   }
