@@ -22,8 +22,20 @@
   margin: 0 0 2em 0;
 }
 
+.input-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.char-limit {
+  font-size: 12px;
+  align-self: end;
+  margin-top: 0.5em;
+}
+
 .message-input {
   width: 500px;
+  height: 120px;
   padding: 0.5em;
   box-sizing: border-box;
 }

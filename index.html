@@ -11,12 +11,15 @@
       <h1 class="title">El Ivanógrafo</h1>
     </div>
     <div class="section input-section">
-      <textarea
-        class="message-input"
-        placeholder="Introduce un mensaje"
-        oninput="handleInput(this.value)"
-        maxlength="120"
-      ></textarea>
+      <div class="input-box">
+        <textarea
+          class="message-input"
+          placeholder="Introduce un mensaje"
+          oninput="handleInput(this.value)"
+          maxlength="120"
+        ></textarea>
+        <span id="char-limit" class="char-limit"></span>
+      </div>
     </div>
     <div class="section output-section">
       <table class="grid">

@@ -4,6 +4,8 @@ const ROW_LENGTH = 20;
 const COL_LENGTH = 10;
 const GRID_SIZE = ROW_LENGTH * COL_LENGTH;
 
+const CHAR_LIMIT = Math.floor(GRID_SIZE * 0.6);
+
 const LEGAL_CHARACTERS = [
   "A",
   "B",
@@ -56,8 +58,8 @@ const LOW_CONTRAST = [
 const HIGH_CONTRAST = [
   { foreground: "#ffd966", background: "#674ea7" },
   { foreground: "#674ea7", background: "#ffd966" },
-  { foreground: "#6fa8dc", background: "#ffd966" },
-  { foreground: "#ffd966", background: "#6fa8dc" },
+  { foreground: "#3c78d8", background: "#ffd966" },
+  { foreground: "#ffd966", background: "#3c78d8" },
   { foreground: "#3c78d8", background: "#ead1dc" },
   { foreground: "#ead1dc", background: "#3c78d8" },
   { foreground: "#b6d7a8", background: "#674ea7" },
@@ -92,13 +94,28 @@ function setCell(y, x, slot) {
 }
 
 function cleanUp(input) {
-  const noDiacritcs = input.normalize("NFD").replace(/\p{Diacritic}/gu, "");
-  const noPunctuation = noDiacritcs.replace(/[^a-zA-Zñ]/, "");
+  const noDiacritcs = input
+    .replace(/á/g, "a")
+    .replace(/é/g, "e")
+    .replace(/í/g, "i")
+    .replace(/ó/g, "o")
+    .replace(/ú/g, "u")
+    .replace(/ü/g, "u");
+
+  const noPunctuation = noDiacritcs.replace(/[^a-zA-ZñÑ]/g, "");
   return noPunctuation.toUpperCase();
+}
+
+function updateCharLimit(current) {
+  const charLimitIndicator = document.getElementById("char-limit");
+  charLimitIndicator.innerText = `${current} / ${CHAR_LIMIT}`;
 }
 
 function handleInput(value) {
   const message = cleanUp(value).split("");
+
+  updateCharLimit(message.length);
+
   const slotBuffer = generateRandomSlotBuffer();
 
   for (let i = 0; i < message.length; i += 1) {
